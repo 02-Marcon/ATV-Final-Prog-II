@@ -40,3 +40,34 @@ As tarefas são armazenadas em duas listas simplesmente encadeadas:
 uma para as tarefas pendentes e outra para as concluídas. Cada elemento
 da lista contém os dados de uma tarefa e um ponteiro que indica o
 próximo elemento. O último nó aponta para nullptr.
+
+Diagrama da estrutura de dados
+```mermaid
+flowchart TD
+    A["Gestor de Tarefas"] --> B["Lista de Pendentes"]
+    A --> C["Lista de Concluídas"]
+
+    B --> D["Tarefa"]
+    D --> E["Tarefa"]
+    E --> F["Tarefa"]
+    F --> G["nullptr"]
+
+    C --> H["Tarefa"]
+    H --> I["Tarefa"]
+    I --> J["nullptr"]
+
+    subgraph Estrutura_de_cada_no["Campos de cada nó: struct Tarefa"]
+        K["codigo"]
+        L["nome"]
+        M["descricao"]
+        N["dia, mes, ano"]
+        O["prioridade"]
+        P["prox"]
+    end
+```
+A inserção de uma tarefa ocorre ao final da lista correspondente. Para
+realizar buscas, listagens, ordenações e remoções, o programa percorre e
+manipula os nós por meio de ponteiros. A ordenação utiliza o algoritmo
+Bubble Sort, considerando o prazo ou a prioridade. A movimentação
+entre as listas permite concluir ou reabrir tarefas sem criar um novo
+registro.
