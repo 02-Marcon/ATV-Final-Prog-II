@@ -5,7 +5,8 @@
 
 using namespace std;
 
-struct Tarefa {
+struct Tarefa
+{
     int codigo;
     string nome;
     string descricao;
@@ -13,25 +14,30 @@ struct Tarefa {
     int mes;
     int ano;
     int prioridade;
-    Tarefa* prox;
+    Tarefa *prox;
 };
 
 int proximoCodigo = 1;
 
-// Entrada de numeros
-int lerInteiro(string mensagem, int minimo, int maximo) {
+int lerInteiro(string mensagem, int minimo, int maximo)
+{
     int valor;
 
-    while (true) {
+    while (true)
+    {
         cout << mensagem;
 
-        if (cin >> valor) {
+        if (cin >> valor)
+        {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-            if (valor >= minimo && valor <= maximo) {
+            if (valor >= minimo && valor <= maximo)
+            {
                 return valor;
             }
-        } else {
+        }
+        else
+        {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -40,21 +46,19 @@ int lerInteiro(string mensagem, int minimo, int maximo) {
     }
 }
 
-// Verifica ano bissexto
-bool anoBissexto(int ano) {
-    return (ano % 400 == 0) ||
-           (ano % 4 == 0 && ano % 100 != 0);
+bool anoBissexto(int ano)
+{
+    return (ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0);
 }
 
-// Verifica se a data existe
-bool dataValida(int dia, int mes, int ano) {
+bool dataValida(int dia, int mes, int ano)
+{
     if (ano < 1900 || ano > 9999 || mes < 1 || mes > 12)
         return false;
 
     int diasMes[] = {
         31, 28, 31, 30, 31, 30,
-        31, 31, 30, 31, 30, 31
-    };
+        31, 31, 30, 31, 30, 31};
 
     if (anoBissexto(ano))
         diasMes[1] = 29;
@@ -62,8 +66,8 @@ bool dataValida(int dia, int mes, int ano) {
     return dia >= 1 && dia <= diasMes[mes - 1];
 }
 
-// Compara datas
-bool dataMenor(Tarefa* a, Tarefa* b) {
+bool dataMenor(Tarefa *a, Tarefa *b)
+{
     if (a->ano != b->ano)
         return a->ano < b->ano;
 
@@ -73,16 +77,17 @@ bool dataMenor(Tarefa* a, Tarefa* b) {
     return a->dia < b->dia;
 }
 
-// Adiciona tarefa
-void adicionarTarefa(Tarefa*& lista) {
-    Tarefa* nova = new Tarefa;
+void adicionarTarefa(Tarefa *&lista)
+{
+    Tarefa *nova = new Tarefa;
 
     nova->codigo = proximoCodigo++;
 
     cout << "\nNome da tarefa: ";
     getline(cin, nova->nome);
 
-    while (nova->nome.empty()) {
+    while (nova->nome.empty())
+    {
         cout << "O nome nao pode ficar vazio: ";
         getline(cin, nova->nome);
     }
@@ -90,17 +95,21 @@ void adicionarTarefa(Tarefa*& lista) {
     cout << "Descricao: ";
     getline(cin, nova->descricao);
 
-    do {
+    do
+    {
         cout << "Data de prazo (dia mes ano): ";
 
         cin >> nova->dia >> nova->mes >> nova->ano;
 
-        if (!cin) {
+        if (!cin)
+        {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Data invalida!\n";
             nova->dia = 0;
-        } else {
+        }
+        else
+        {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
             if (!dataValida(nova->dia, nova->mes, nova->ano))
@@ -110,17 +119,20 @@ void adicionarTarefa(Tarefa*& lista) {
     } while (!dataValida(nova->dia, nova->mes, nova->ano));
 
     nova->prioridade = lerInteiro(
-        "Prioridade (1 a 5): ", 1, 5
-    );
+        "Prioridade (1 a 5): ", 1, 5);
 
     nova->prox = nullptr;
 
-    if (lista == nullptr) {
+    if (lista == nullptr)
+    {
         lista = nova;
-    } else {
-        Tarefa* atual = lista;
+    }
+    else
+    {
+        Tarefa *atual = lista;
 
-        while (atual->prox != nullptr) {
+        while (atual->prox != nullptr)
+        {
             atual = atual->prox;
         }
 
@@ -131,8 +143,8 @@ void adicionarTarefa(Tarefa*& lista) {
     cout << "Codigo: " << nova->codigo << endl;
 }
 
-// Exibe uma tarefa
-void exibirTarefa(Tarefa* t) {
+void exibirTarefa(Tarefa *t)
+{
     cout << "\n----------------------------------\n";
     cout << "Codigo: " << t->codigo << endl;
     cout << "Nome: " << t->nome << endl;
@@ -140,35 +152,39 @@ void exibirTarefa(Tarefa* t) {
 
     cout << "Prazo: ";
 
-    if (t->dia < 10) cout << "0";
+    if (t->dia < 10)
+        cout << "0";
     cout << t->dia << "/";
 
-    if (t->mes < 10) cout << "0";
+    if (t->mes < 10)
+        cout << "0";
     cout << t->mes << "/" << t->ano << endl;
 
     cout << "Prioridade: " << t->prioridade << "/5\n";
     cout << "----------------------------------\n";
 }
 
-// Lista todas as tarefas
-void listarTarefas(Tarefa* lista) {
-    if (lista == nullptr) {
+void listarTarefas(Tarefa *lista)
+{
+    if (lista == nullptr)
+    {
         cout << "\nNenhuma tarefa cadastrada.\n";
         return;
     }
 
     cout << "\n===== LISTA DE TAREFAS =====\n";
 
-    Tarefa* atual = lista;
+    Tarefa *atual = lista;
 
-    while (atual != nullptr) {
+    while (atual != nullptr)
+    {
         exibirTarefa(atual);
         atual = atual->prox;
     }
 }
 
-// Busca pelo nome
-void buscarTarefa(Tarefa* pendentes, Tarefa* concluidas) {
+void buscarTarefa(Tarefa *pendentes, Tarefa *concluidas)
+{
     string nome;
 
     cout << "\nDigite o nome da tarefa: ";
@@ -176,36 +192,43 @@ void buscarTarefa(Tarefa* pendentes, Tarefa* concluidas) {
 
     bool encontrou = false;
 
-    Tarefa* listas[] = {pendentes, concluidas};
+    Tarefa *listas[] = {pendentes, concluidas};
 
-    for (int i = 0; i < 2; i++) {
-        Tarefa* atual = listas[i];
+    for (int i = 0; i < 2; i++)
+    {
+        Tarefa *atual = listas[i];
 
-        while (atual != nullptr) {
+        while (atual != nullptr)
+        {
             bool corresponde = false;
 
-            if (nome.size() <= atual->nome.size()) {
-                for (int j = 0; j <=
-                     (int)atual->nome.size() - (int)nome.size(); j++) {
+            if (nome.size() <= atual->nome.size())
+            {
+                for (int j = 0; j <= (int)atual->nome.size() - (int)nome.size(); j++)
+                {
 
                     bool igual = true;
 
-                    for (int k = 0; k < (int)nome.size(); k++) {
+                    for (int k = 0; k < (int)nome.size(); k++)
+                    {
                         if (tolower((unsigned char)nome[k]) !=
-                            tolower((unsigned char)atual->nome[j + k])) {
+                            tolower((unsigned char)atual->nome[j + k]))
+                        {
                             igual = false;
                             break;
                         }
                     }
 
-                    if (igual) {
+                    if (igual)
+                    {
                         corresponde = true;
                         break;
                     }
                 }
             }
 
-            if (corresponde) {
+            if (corresponde)
+            {
                 exibirTarefa(atual);
                 encontrou = true;
             }
@@ -218,8 +241,8 @@ void buscarTarefa(Tarefa* pendentes, Tarefa* concluidas) {
         cout << "\nTarefa nao encontrada.\n";
 }
 
-// Troca os dados de duas tarefas
-void trocarDados(Tarefa* a, Tarefa* b) {
+void trocarDados(Tarefa *a, Tarefa *b)
+{
     int codigo = a->codigo;
     a->codigo = b->codigo;
     b->codigo = codigo;
@@ -249,45 +272,46 @@ void trocarDados(Tarefa* a, Tarefa* b) {
     b->prioridade = prioridade;
 }
 
-// Bubble Sort
-void ordenarTarefas(Tarefa* lista, int criterio) {
-    if (lista == nullptr || lista->prox == nullptr) {
+void ordenarTarefas(Tarefa *lista, int criterio)
+{
+    if (lista == nullptr || lista->prox == nullptr)
+    {
         cout << "\nNao existem tarefas suficientes para ordenar.\n";
         return;
     }
 
     bool trocou;
 
-    do {
+    do
+    {
         trocou = false;
 
-        Tarefa* atual = lista;
+        Tarefa *atual = lista;
 
-        while (atual->prox != nullptr) {
+        while (atual->prox != nullptr)
+        {
             bool trocar = false;
 
-            if (criterio == 1) {
-                // Ordenacao por prazo
+            if (criterio == 1)
+            {
                 if (dataMenor(atual->prox, atual))
                     trocar = true;
 
-                else if (!dataMenor(atual, atual->prox) &&
-                         !dataMenor(atual->prox, atual) &&
-                         atual->prox->prioridade > atual->prioridade)
+                else if (!dataMenor(atual, atual->prox) && !dataMenor(atual->prox, atual) && atual->prox->prioridade > atual->prioridade)
                     trocar = true;
             }
 
-            else if (criterio == 2) {
-                // Ordenacao por prioridade
+            else if (criterio == 2)
+            {
                 if (atual->prioridade < atual->prox->prioridade)
                     trocar = true;
 
-                else if (atual->prioridade == atual->prox->prioridade &&
-                         dataMenor(atual->prox, atual))
+                else if (atual->prioridade == atual->prox->prioridade && dataMenor(atual->prox, atual))
                     trocar = true;
             }
 
-            if (trocar) {
+            if (trocar)
+            {
                 trocarDados(atual, atual->prox);
                 trocou = true;
             }
@@ -301,13 +325,15 @@ void ordenarTarefas(Tarefa* lista, int criterio) {
     listarTarefas(lista);
 }
 
-// Remove tarefa pelo codigo
-bool removerTarefa(Tarefa*& lista, int codigo) {
-    Tarefa* atual = lista;
-    Tarefa* anterior = nullptr;
+bool removerTarefa(Tarefa *&lista, int codigo)
+{
+    Tarefa *atual = lista;
+    Tarefa *anterior = nullptr;
 
-    while (atual != nullptr) {
-        if (atual->codigo == codigo) {
+    while (atual != nullptr)
+    {
+        if (atual->codigo == codigo)
+        {
             if (anterior == nullptr)
                 lista = atual->prox;
             else
@@ -324,13 +350,15 @@ bool removerTarefa(Tarefa*& lista, int codigo) {
     return false;
 }
 
-// Move uma tarefa entre listas
-bool moverTarefa(Tarefa*& origem, Tarefa*& destino, int codigo) {
-    Tarefa* atual = origem;
-    Tarefa* anterior = nullptr;
+bool moverTarefa(Tarefa *&origem, Tarefa *&destino, int codigo)
+{
+    Tarefa *atual = origem;
+    Tarefa *anterior = nullptr;
 
-    while (atual != nullptr) {
-        if (atual->codigo == codigo) {
+    while (atual != nullptr)
+    {
+        if (atual->codigo == codigo)
+        {
             if (anterior == nullptr)
                 origem = atual->prox;
             else
@@ -338,10 +366,13 @@ bool moverTarefa(Tarefa*& origem, Tarefa*& destino, int codigo) {
 
             atual->prox = nullptr;
 
-            if (destino == nullptr) {
+            if (destino == nullptr)
+            {
                 destino = atual;
-            } else {
-                Tarefa* fim = destino;
+            }
+            else
+            {
+                Tarefa *fim = destino;
 
                 while (fim->prox != nullptr)
                     fim = fim->prox;
@@ -359,20 +390,23 @@ bool moverTarefa(Tarefa*& origem, Tarefa*& destino, int codigo) {
     return false;
 }
 
-// Excluir tarefa
-void excluirTarefa(Tarefa*& pendentes, Tarefa*& concluidas) {
+void excluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)
+{
     int codigo = lerInteiro("Codigo da tarefa: ", 1, 999999999);
 
     if (removerTarefa(pendentes, codigo) ||
-        removerTarefa(concluidas, codigo)) {
+        removerTarefa(concluidas, codigo))
+    {
         cout << "\nTarefa excluida com sucesso!\n";
-    } else {
+    }
+    else
+    {
         cout << "\nCodigo nao encontrado.\n";
     }
 }
 
-// Concluir tarefa
-void concluirTarefa(Tarefa*& pendentes, Tarefa*& concluidas) {
+void concluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)
+{
     int codigo = lerInteiro("Codigo da tarefa: ", 1, 999999999);
 
     if (moverTarefa(pendentes, concluidas, codigo))
@@ -381,8 +415,8 @@ void concluirTarefa(Tarefa*& pendentes, Tarefa*& concluidas) {
         cout << "\nTarefa nao encontrada nas pendentes.\n";
 }
 
-// Reabrir tarefa
-void reabrirTarefa(Tarefa*& concluidas, Tarefa*& pendentes) {
+void reabrirTarefa(Tarefa *&concluidas, Tarefa *&pendentes)
+{
     int codigo = lerInteiro("Codigo da tarefa: ", 1, 999999999);
 
     if (moverTarefa(concluidas, pendentes, codigo))
@@ -391,24 +425,26 @@ void reabrirTarefa(Tarefa*& concluidas, Tarefa*& pendentes) {
         cout << "\nTarefa nao encontrada nas concluidas.\n";
 }
 
-// Libera memoria
-void liberarLista(Tarefa*& lista) {
-    while (lista != nullptr) {
-        Tarefa* auxiliar = lista;
+void liberarLista(Tarefa *&lista)
+{
+    while (lista != nullptr)
+    {
+        Tarefa *auxiliar = lista;
         lista = lista->prox;
 
         delete auxiliar;
     }
 }
 
-// Menu principal
-int main() {
-    Tarefa* pendentes = nullptr;
-    Tarefa* concluidas = nullptr;
+int main()
+{
+    Tarefa *pendentes = nullptr;
+    Tarefa *concluidas = nullptr;
 
     int opcao;
 
-    do {
+    do
+    {
         cout << "\n=================================\n";
         cout << "       GESTOR DE TAREFAS\n";
         cout << "=================================\n";
@@ -426,47 +462,48 @@ int main() {
 
         opcao = lerInteiro("Escolha uma opcao: ", 0, 9);
 
-        switch (opcao) {
-            case 1:
-                adicionarTarefa(pendentes);
-                break;
+        switch (opcao)
+        {
+        case 1:
+            adicionarTarefa(pendentes);
+            break;
 
-            case 2:
-                excluirTarefa(pendentes, concluidas);
-                break;
+        case 2:
+            excluirTarefa(pendentes, concluidas);
+            break;
 
-            case 3:
-                listarTarefas(pendentes);
-                break;
+        case 3:
+            listarTarefas(pendentes);
+            break;
 
-            case 4:
-                buscarTarefa(pendentes, concluidas);
-                break;
+        case 4:
+            buscarTarefa(pendentes, concluidas);
+            break;
 
-            case 5:
-                ordenarTarefas(pendentes, 1);
-                break;
+        case 5:
+            ordenarTarefas(pendentes, 1);
+            break;
 
-            case 6:
-                ordenarTarefas(pendentes, 2);
-                break;
+        case 6:
+            ordenarTarefas(pendentes, 2);
+            break;
 
-            case 7:
-                concluirTarefa(pendentes, concluidas);
-                break;
+        case 7:
+            concluirTarefa(pendentes, concluidas);
+            break;
 
-            case 8:
-                cout << "\n===== TAREFAS CONCLUIDAS =====\n";
-                listarTarefas(concluidas);
-                break;
+        case 8:
+            cout << "\n===== TAREFAS CONCLUIDAS =====\n";
+            listarTarefas(concluidas);
+            break;
 
-            case 9:
-                reabrirTarefa(concluidas, pendentes);
-                break;
+        case 9:
+            reabrirTarefa(concluidas, pendentes);
+            break;
 
-            case 0:
-                cout << "\nEncerrando o Gestor de Tarefas...\n";
-                break;
+        case 0:
+            cout << "\nEncerrando o Gestor de Tarefas...\n";
+            break;
         }
 
     } while (opcao != 0);
