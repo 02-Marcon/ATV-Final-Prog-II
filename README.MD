@@ -95,3 +95,13 @@ junto ao projeto.
 A divisão das atividades permitiu organizar o desenvolvimento e a
 documentação, contribuindo para a conclusão do projeto de forma
 colaborativa.
+
+5. Considerações finais
+O projeto possibilitou aplicar conceitos fundamentais da programação em
+C++, especialmente o uso de estruturas, listas simplesmente encadeadas,
+ponteiros, funções, algoritmos de busca e ordenação e gerenciamento
+dinâmico de memória.
+
+O resultado é um sistema de terminal voltado à organização de tarefas,
+que reúne operações de cadastro, consulta, pesquisa, ordenação, exclusão
+e controle de conclusão das atividades.
