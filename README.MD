@@ -26,3 +26,17 @@ prioridades e visualizar quais tarefas ainda precisam ser realizadas.
 A escolha do tema busca aplicar, em uma situação prática, os conceitos
 de lógica de programação, funções, estruturas de dados, ponteiros e
 gerenciamento de memória estudados na linguagem C++.
+
+3. Estruturas de dados utilizadas
+A principal estrutura utilizada é a struct Tarefa, responsável por
+armazenar os dados de cada atividade:
+- codigo: identificador numérico da tarefa;
+- nome: título da atividade;
+- descricao: informações complementares;
+- dia, mes e ano: data associada à tarefa;
+- prioridade: nível de prioridade definido;
+- prox: ponteiro para o próximo elemento da lista.
+As tarefas são armazenadas em duas listas simplesmente encadeadas:
+uma para as tarefas pendentes e outra para as concluídas. Cada elemento
+da lista contém os dados de uma tarefa e um ponteiro que indica o
+próximo elemento. O último nó aponta para nullptr.
