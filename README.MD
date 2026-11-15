@@ -71,3 +71,27 @@ manipula os nós por meio de ponteiros. A ordenação utiliza o algoritmo
 Bubble Sort, considerando o prazo ou a prioridade. A movimentação
 entre as listas permite concluir ou reabrir tarefas sem criar um novo
 registro.
+
+4. Divisão de responsabilidades entre os integrantes
+O desenvolvimento foi realizado em equipe, com a distribuição das
+atividades conforme as responsabilidades assumidas por cada integrante:
+  Integrante                          Responsabilidades
+  Murilo                          Responsável pela maior parte da
+implementação do código-fonte,
+contribuindo principalmente para o
+desenvolvimento da lógica e das
+funcionalidades do sistema.
+
+  Guilherme                       Participação no desenvolvimento do
+código-fonte e elaboração deste
+arquivo README, reunindo e
+documentando as informações
+técnicas e organizacionais do
+projeto.
+Eduardo                         Responsável pela elaboração do
+arquivo arquivo.txt, utilizado
+como parte dos materiais entregues
+junto ao projeto.
+A divisão das atividades permitiu organizar o desenvolvimento e a
+documentação, contribuindo para a conclusão do projeto de forma
+colaborativa.
