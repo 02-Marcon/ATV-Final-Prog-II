@@ -182,7 +182,7 @@ void listarTarefas(Tarefa *lista)//Mostrar todas as tarefas
     }
 }
 
-void trocarDados(Tarefa *a, Tarefa *b)
+void trocarDados(Tarefa *a, Tarefa *b)//Trocar informações entre duas tarefas
 {
     int codigo = a->codigo;
     a->codigo = b->codigo;
@@ -213,7 +213,7 @@ void trocarDados(Tarefa *a, Tarefa *b)
     b->prioridade = prioridade;
 }
 
-void ordenarTarefas(Tarefa *lista, int criterio)
+void ordenarTarefas(Tarefa *lista, int criterio)//Ordenar as tarefas por prazo ou prioridade
 {
     if (lista == nullptr || lista->prox == nullptr)
     {
@@ -266,7 +266,7 @@ void ordenarTarefas(Tarefa *lista, int criterio)
     listarTarefas(lista);
 }
 
-bool removerTarefa(Tarefa *&lista, int codigo)
+bool removerTarefa(Tarefa *&lista, int codigo)//Remove uma tarefa
 {
     Tarefa *atual = lista;
     Tarefa *anterior = nullptr;
@@ -291,7 +291,7 @@ bool removerTarefa(Tarefa *&lista, int codigo)
     return false;
 }
 
-bool moverTarefa(Tarefa *&origem, Tarefa *&destino, int codigo)
+bool moverTarefa(Tarefa *&origem, Tarefa *&destino, int codigo)//Move entre pendentes e concluídas
 {
     Tarefa *atual = origem;
     Tarefa *anterior = nullptr;
@@ -331,7 +331,7 @@ bool moverTarefa(Tarefa *&origem, Tarefa *&destino, int codigo)
     return false;
 }
 
-void excluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)
+void excluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)//Mensagem de exclusão de tarefa
 {
     int codigo = lerInteiro("Codigo da tarefa: ", 1, 999999999);
 
@@ -346,7 +346,7 @@ void excluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)
     }
 }
 
-void concluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)
+void concluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)//Mensagem de conclusão de tarefa
 {
     int codigo = lerInteiro("Codigo da tarefa: ", 1, 999999999);
 
@@ -356,7 +356,7 @@ void concluirTarefa(Tarefa *&pendentes, Tarefa *&concluidas)
         cout << "\nTarefa nao encontrada nas pendentes.\n";
 }
 
-void reabrirTarefa(Tarefa *&concluidas, Tarefa *&pendentes)
+void reabrirTarefa(Tarefa *&concluidas, Tarefa *&pendentes)//Mensagem de reabertura de tarefa
 {
     int codigo = lerInteiro("Codigo da tarefa: ", 1, 999999999);
 
@@ -366,7 +366,7 @@ void reabrirTarefa(Tarefa *&concluidas, Tarefa *&pendentes)
         cout << "\nTarefa nao encontrada nas concluidas.\n";
 }
 
-void liberarLista(Tarefa *&lista)
+void liberarLista(Tarefa *&lista)//Limpa todas as fichas que ficaram guardadas
 {
     while (lista != nullptr)
     {
