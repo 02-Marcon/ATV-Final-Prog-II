@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct Tarefa
+struct Tarefa //Todas as informações da tarefa
 {
     int codigo;
     string nome;
@@ -46,19 +46,18 @@ int lerInteiro(string mensagem, int minimo, int maximo)
     }
 }
 
-bool anoBissexto(int ano)
+bool anoBissexto(int ano)//Conferir se o ano é bissexto
 {
     return (ano % 400 == 0) || (ano % 4 == 0 && ano % 100 != 0);
 }
 
-bool dataValida(int dia, int mes, int ano)
+bool dataValida(int dia, int mes, int ano)//Conferir se a data é válida
 {
     if (ano < 1900 || ano > 9999 || mes < 1 || mes > 12)
         return false;
 
     int diasMes[] = {
-        31, 28, 31, 30, 31, 30,
-        31, 31, 30, 31, 30, 31};
+        31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     if (anoBissexto(ano))
         diasMes[1] = 29;
@@ -66,7 +65,7 @@ bool dataValida(int dia, int mes, int ano)
     return dia >= 1 && dia <= diasMes[mes - 1];
 }
 
-bool dataMenor(Tarefa *a, Tarefa *b)
+bool dataMenor(Tarefa *a, Tarefa *b)//Comparar datas para ordenar 
 {
     if (a->ano != b->ano)
         return a->ano < b->ano;
@@ -77,7 +76,7 @@ bool dataMenor(Tarefa *a, Tarefa *b)
     return a->dia < b->dia;
 }
 
-void adicionarTarefa(Tarefa *&lista)
+void adicionarTarefa(Tarefa *&lista)//Criar uma nova tarefa e adicioná-la à lista de tarefas pendentes
 {
     Tarefa *nova = new Tarefa;
 
@@ -143,7 +142,7 @@ void adicionarTarefa(Tarefa *&lista)
     cout << "Codigo: " << nova->codigo << endl;
 }
 
-void exibirTarefa(Tarefa *t)
+void exibirTarefa(Tarefa *t)//Mostrar as informações de uma tarefa específica
 {
     cout << "\n----------------------------------\n";
     cout << "Codigo: " << t->codigo << endl;
@@ -164,7 +163,7 @@ void exibirTarefa(Tarefa *t)
     cout << "----------------------------------\n";
 }
 
-void listarTarefas(Tarefa *lista)
+void listarTarefas(Tarefa *lista)//Mostrar todas as tarefas
 {
     if (lista == nullptr)
     {
@@ -181,64 +180,6 @@ void listarTarefas(Tarefa *lista)
         exibirTarefa(atual);
         atual = atual->prox;
     }
-}
-
-void buscarTarefa(Tarefa *pendentes, Tarefa *concluidas)
-{
-    string nome;
-
-    cout << "\nDigite o nome da tarefa: ";
-    getline(cin, nome);
-
-    bool encontrou = false;
-
-    Tarefa *listas[] = {pendentes, concluidas};
-
-    for (int i = 0; i < 2; i++)
-    {
-        Tarefa *atual = listas[i];
-
-        while (atual != nullptr)
-        {
-            bool corresponde = false;
-
-            if (nome.size() <= atual->nome.size())
-            {
-                for (int j = 0; j <= (int)atual->nome.size() - (int)nome.size(); j++)
-                {
-
-                    bool igual = true;
-
-                    for (int k = 0; k < (int)nome.size(); k++)
-                    {
-                        if (tolower((unsigned char)nome[k]) !=
-                            tolower((unsigned char)atual->nome[j + k]))
-                        {
-                            igual = false;
-                            break;
-                        }
-                    }
-
-                    if (igual)
-                    {
-                        corresponde = true;
-                        break;
-                    }
-                }
-            }
-
-            if (corresponde)
-            {
-                exibirTarefa(atual);
-                encontrou = true;
-            }
-
-            atual = atual->prox;
-        }
-    }
-
-    if (!encontrou)
-        cout << "\nTarefa nao encontrada.\n";
 }
 
 void trocarDados(Tarefa *a, Tarefa *b)
@@ -451,12 +392,11 @@ int main()
         cout << "1 - Adicionar tarefa\n";
         cout << "2 - Excluir tarefa\n";
         cout << "3 - Ver lista de tarefas\n";
-        cout << "4 - Buscar tarefa pelo nome\n";
-        cout << "5 - Ordenar por prazo\n";
-        cout << "6 - Ordenar por prioridade\n";
-        cout << "7 - Concluir tarefa\n";
-        cout << "8 - Ver tarefas desfeitas/concluidas\n";
-        cout << "9 - Reabrir tarefa\n";
+        cout << "4 - Ordenar por prazo\n";
+        cout << "5 - Ordenar por prioridade\n";
+        cout << "6 - Concluir tarefa\n";
+        cout << "7 - Ver tarefas desfeitas/concluidas\n";
+        cout << "8 - Reabrir tarefa\n";
         cout << "0 - Sair\n";
         cout << "=================================\n";
 
@@ -477,27 +417,23 @@ int main()
             break;
 
         case 4:
-            buscarTarefa(pendentes, concluidas);
-            break;
-
-        case 5:
             ordenarTarefas(pendentes, 1);
             break;
 
-        case 6:
+        case 5:
             ordenarTarefas(pendentes, 2);
             break;
 
-        case 7:
+        case 6:
             concluirTarefa(pendentes, concluidas);
             break;
 
-        case 8:
+        case 7:
             cout << "\n===== TAREFAS CONCLUIDAS =====\n";
             listarTarefas(concluidas);
             break;
 
-        case 9:
+        case 8:
             reabrirTarefa(concluidas, pendentes);
             break;
 
