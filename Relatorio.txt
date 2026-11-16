@@ -1,0 +1,52 @@
+RELATÓRIO TÉCNICO — GESTOR DE TAREFAS
+Linguagem utilizada: C++
+1. Visão geral
+O sistema Gestor de Tarefas permite cadastrar, listar, buscar, ordenar, concluir, reabrir e excluir tarefas. Cada tarefa armazena código, nome, descrição, prazo (dia, mês e ano), prioridade e um ponteiro para a próxima tarefa.
+
+As tarefas são separadas em duas listas: pendentes e concluídas.
+2. Estruturas de dados escolhidas
+A estrutura principal utilizada foi a struct Tarefa, que reúne todas as informações relacionadas a uma tarefa em um único registro. Essa escolha facilita a organização e o acesso aos dados.
+
+Foi utilizada uma lista simplesmente encadeada, na qual cada elemento possui um ponteiro para o próximo elemento. Essa estrutura foi escolhida porque permite adicionar e remover tarefas dinamicamente, sem precisar definir antecipadamente a quantidade máxima de registros.
+
+O programa utiliza dois ponteiros principais: pendentes e concluidas. Essa separação facilita o controle das tarefas de acordo com seu estado.
+
+A lista encadeada também permite transferir tarefas entre as duas listas sem precisar criar uma nova tarefa ou copiar todos os seus dados.
+3. Algoritmo de ordenação
+O algoritmo de ordenação implementado foi o Bubble Sort (ordenação por bolha).
+
+Ele funciona comparando elementos vizinhos e realizando trocas quando estão fora da ordem desejada. Esse processo se repete até que nenhuma troca seja necessária.
+
+O programa possui dois critérios de ordenação:
+- Por prazo: organiza as tarefas da data mais próxima para a mais distante. Em caso de empate, considera a maior prioridade primeiro.
+- Por prioridade: organiza as tarefas da maior prioridade para a menor. Em caso de empate, considera o prazo mais próximo primeiro.
+A função trocarDados() realiza a troca das informações entre duas tarefas, mantendo os ponteiros da lista encadeada.
+
+Complexidade do algoritmo:
+- Melhor caso: O(n), quando a lista já está ordenada.
+- Caso médio: O(n²).
+- Pior caso: O(n²).
+- Espaço auxiliar: O(1).
+O Bubble Sort foi escolhido por sua simplicidade de implementação e facilidade de compreensão. Para uma quantidade pequena de tarefas, atende adequadamente às necessidades do projeto.
+4. Gerenciamento de memória
+O gerenciamento de memória é realizado utilizando alocação dinâmica com os comandos new e delete.
+
+Quando uma nova tarefa é cadastrada, o programa utiliza new para reservar espaço na memória. Isso permite que a quantidade de tarefas aumente conforme a necessidade do usuário.
+
+Quando uma tarefa é excluída, a função removerTarefa() utiliza delete para liberar o espaço ocupado por ela.
+
+Ao concluir ou reabrir uma tarefa, a função moverTarefa() transfere o elemento de uma lista para outra, modificando os ponteiros, sem precisar criar ou excluir um novo elemento.
+
+Além disso, o programa possui a função liberarLista(), responsável por percorrer toda a lista e liberar individualmente a memória de cada tarefa.
+
+Essa função é executada ao encerrar o programa, tanto para a lista de tarefas pendentes quanto para a de tarefas concluídas.
+
+As variáveis do tipo string, utilizadas para armazenar nomes e descrições, gerenciam automaticamente sua própria memória por meio da biblioteca padrão do C++.
+5. Considerações finais
+As estruturas e os algoritmos escolhidos priorizam simplicidade, organização e flexibilidade.
+
+A lista simplesmente encadeada permite armazenar uma quantidade variável de tarefas, enquanto o Bubble Sort oferece uma maneira simples de organizar os registros por prazo ou prioridade.
+
+O gerenciamento dinâmico de memória permite criar, remover e transferir tarefas durante a execução, evitando manter espaços desnecessários ocupados.
+
+Dessa forma, o projeto atende aos objetivos propostos, utilizando conceitos importantes de programação em C++, como estruturas, ponteiros, listas encadeadas, algoritmos de ordenação e gerenciamento de memória.
